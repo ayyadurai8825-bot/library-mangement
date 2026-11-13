@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Member Management | Digital Library</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../dashboard/index.html">
+      <span class="brand-icon" aria-hidden="true">📚</span>
+      <span>Digital Library</span>
+    </a>
+    <nav class="navigation" aria-label="Main navigation">
+      <a href="../dashboard/index.html">Dashboard</a>
+      <a href="#members">Members</a>
+      <button class="logout-button" id="logoutButton" type="button">Logout</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-heading">
+      <h1>Member Management</h1>
+      <p>Add, update, and remove library member records.</p>
+    </section>
+
+    <p class="page-message" id="pageMessage" role="status" aria-live="polite"></p>
+
+    <dialog class="member-dialog" id="memberDialog" aria-labelledby="formTitle">
+      <div class="dialog-heading">
+        <div>
+          <p class="dialog-eyebrow">LIBRARY COMMUNITY</p>
+          <h2 id="formTitle">Add a member</h2>
+        </div>
+        <button class="dialog-close" id="closeDialogButton" type="button" aria-label="Close dialog">×</button>
+      </div>
+      <form id="memberForm">
+        <div class="form-grid">
+          <label>
+            Member ID
+            <input id="memberId" name="memberId" type="text" maxlength="40" required>
+          </label>
+          <label>
+            Name
+            <input id="name" name="name" type="text" maxlength="100" required>
+          </label>
+          <label>
+            Email
+            <input id="email" name="email" type="email" maxlength="254" required>
+          </label>
+          <label>
+            Mobile
+            <input id="mobile" name="mobile" type="tel" inputmode="numeric" maxlength="10" pattern="[0-9]{10}" title="Enter exactly 10 digits." required>
+          </label>
+        </div>
+        <div class="form-actions">
+          <button class="primary-button" id="saveButton" type="submit">Add Member</button>
+          <button class="secondary-button" id="cancelButton" type="button" hidden>Cancel Edit</button>
+        </div>
+        <p class="form-message" id="formMessage" role="status" aria-live="polite"></p>
+      </form>
+    </dialog>
+
+    <section class="panel members-panel" id="members" aria-labelledby="membersTitle">
+      <div class="list-heading">
+        <div>
+          <h2 id="membersTitle">Member records</h2>
+          <p id="memberCount">0 members</p>
+        </div>
+        <div class="list-actions">
+          <label class="search-control">
+            <span class="visually-hidden">Search member records</span>
+            <input class="search-input" id="memberSearch" type="search" placeholder="Search members..." autocomplete="off">
+          </label>
+          <button class="primary-button add-member-button" id="addMemberButton" type="button">＋ Add member</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Member ID</th>
+              <th scope="col">Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Mobile</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="memberRows"></tbody>
+        </table>
+        <p class="empty-state" id="emptyState">No members added yet.</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="./members.js"></script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(rgba(15, 118, 110, 0.7), rgba(249, 115, 22, 0.7)),
+    url("../assets/library1.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.login-container {
+  width: min(420px, calc(100% - 32px));
+  background: white;
+  padding: 35px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+  text-align: center;
+  color: #0f766e;
+  margin-bottom: 12px;
+}
+
+p {
+  text-align: center;
+  color: #64748b;
+  margin-bottom: 20px;
+}
+
+.register-prompt {
+  margin: 18px 0 0;
+  line-height: 1.5;
+}
+
+label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+  color: #172033;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+input:focus {
+  outline: none;
+  border-color: #0f766e;
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.15);
+}
+
+.error {
+  display: block;
+  color: #b91c1c;
+  font-size: 13px;
+  line-height: 1.4;
+  margin-top: 6px;
+}
+
+.error:empty,
+.login-message:empty {
+  display: none;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 14px;
+}
+
+button {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: #f97316;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+button:hover {
+  background: #c2410c;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid #14b8a6;
+  outline-offset: 3px;
+}
+
+.reset-btn {
+  background: #64748b;
+}
+
+.reset-btn:hover {
+  background: #475569;
+}
+
+.login-message {
+  display: block;
+  text-align: left;
+  margin-top: 5px;
+  min-height: 18px;
+  font-weight: bold;
+}
+
+.login-message.error {
+  color: #b91c1c;
+}
+
+.login-message.success {
+  color: #15803d;
+}
+
+a {
+  color: #0f766e;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a:hover {
+  text-decoration: underline;
+}

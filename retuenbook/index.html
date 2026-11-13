@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Return Books | Digital Library</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../dashboard/index.html">
+      <span class="brand-icon" aria-hidden="true">📚</span>
+      <span>Digital Library</span>
+    </a>
+    <nav class="navigation" aria-label="Main navigation">
+      <a href="../dashboard/index.html">Dashboard</a>
+      <a href="../bookpage/index.html">Books</a>
+      <a href="../issuebook/index.html">Issue Books</a>
+      <a href="#activeLoans">Return Books</a>
+      <button class="logout-button" id="logoutButton" type="button">Logout</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-heading">
+      <h1>Return Books</h1>
+      <p>Review active loans and record returned books.</p>
+    </section>
+
+    <section class="summary-grid" aria-label="Loan summary">
+      <article class="summary-card">
+        <p>Active loans</p>
+        <strong id="activeLoanCount">0</strong>
+      </article>
+      <article class="summary-card">
+        <p>Overdue loans</p>
+        <strong id="overdueLoanCount">0</strong>
+      </article>
+      <article class="summary-card">
+        <p>Returned today</p>
+        <strong id="returnedTodayCount">0</strong>
+      </article>
+    </section>
+
+    <section class="panel" id="activeLoans" aria-labelledby="loansTitle">
+      <div class="section-heading">
+        <div>
+          <h2 id="loansTitle">Active loans</h2>
+          <p>Returning a book updates its available quantity and issue history.</p>
+        </div>
+        <span id="loanCount">0 loans</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Book</th>
+              <th scope="col">Member</th>
+              <th scope="col">Issue date</th>
+              <th scope="col">Due date</th>
+              <th scope="col">Status</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody id="loanRows"></tbody>
+        </table>
+        <p class="empty-state" id="emptyState">There are no active loans to return.</p>
+      </div>
+      <p class="form-message" id="pageMessage" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <script src="./return.js"></script>
+</body>
+</html>

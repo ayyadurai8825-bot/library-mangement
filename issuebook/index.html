@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Issue Books | Digital Library</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../dashboard/index.html">
+      <span class="brand-icon" aria-hidden="true">📚</span>
+      <span>Digital Library</span>
+    </a>
+    <nav class="navigation" aria-label="Main navigation">
+      <a href="../dashboard/index.html">Dashboard</a>
+      <a href="../bookpage/index.html">Books</a>
+      <a href="../memberpage/index.html">Members</a>
+      <a href="../retuenbook/index.html">Return Books</a>
+      <a href="#history">Issue History</a>
+      <button class="logout-button" id="logoutButton" type="button">Logout</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-heading">
+      <h1>Issue Books</h1>
+      <p>Issue available books to members and set due dates.</p>
+    </section>
+
+    <section class="summary-grid" aria-label="Borrowing summary">
+      <article class="summary-card">
+        <p>Active loans</p>
+        <strong id="activeLoanCount">0</strong>
+      </article>
+      <article class="summary-card">
+        <p>Overdue loans</p>
+        <strong id="overdueLoanCount">0</strong>
+      </article>
+      <article class="summary-card">
+        <p>Books available</p>
+        <strong id="availableCopyCount">0</strong>
+      </article>
+    </section>
+
+    <section class="panel" aria-labelledby="issueFormTitle">
+      <h2 id="issueFormTitle">Issue a book</h2>
+      <form id="issueForm">
+        <div class="form-grid">
+          <label>
+            Book
+            <select id="bookSelect" name="bookId" required>
+              <option value="">Select an available book</option>
+            </select>
+          </label>
+          <label>
+            Member
+            <select id="memberSelect" name="memberId" required>
+              <option value="">Select a member</option>
+            </select>
+          </label>
+          <label>
+            Due date
+            <input id="dueDate" name="dueDate" type="date" required>
+          </label>
+        </div>
+        <button class="primary-button" id="issueButton" type="submit">Issue Book</button>
+        <p class="form-message" id="formMessage" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section class="panel" id="history" aria-labelledby="historyTitle">
+      <div class="section-heading">
+        <div>
+          <h2 id="historyTitle">Book issue history</h2>
+          <p>View the current and past book issue records.</p>
+        </div>
+        <span id="historyCount">0 records</span>
+      </div>
+      <label class="search-control">
+        <span class="visually-hidden">Search issue history</span>
+        <input class="search-input" id="issueSearch" type="search" placeholder="Search books, members, dates, or status..." autocomplete="off">
+      </label>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Book</th>
+              <th scope="col">Member</th>
+              <th scope="col">Issue date</th>
+              <th scope="col">Due date</th>
+              <th scope="col">Return date</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody id="issueRows"></tbody>
+        </table>
+        <p class="empty-state" id="emptyState">No issue records yet.</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="./issues.js"></script>
+</body>
+</html>

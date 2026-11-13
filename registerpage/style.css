@@ -1,0 +1,159 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(rgba(15, 118, 110, 0.7), rgba(249, 115, 22, 0.7)),
+    url("../assets/library.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+.register-container {
+  width: min(420px, calc(100% - 32px));
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 1;
+}
+
+h1 {
+  text-align: center;
+  color: #0f766e;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-top: 12px;
+  color: #172033;
+}
+
+input {
+  width: 100%;
+  padding: 11px;
+  margin-top: 5px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+input:focus {
+  outline: none;
+  border-color: #0f766e;
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.15);
+}
+
+.password-input-wrap {
+  position: relative;
+}
+
+.password-input-wrap input {
+  padding-right: 68px;
+}
+
+.password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  margin: 0;
+  padding: 7px;
+  transform: translateY(-50%);
+  background: transparent;
+  color: #0f766e;
+  cursor: pointer;
+}
+
+.password-toggle:hover {
+  background: #f0fdfa;
+  color: #64a89d;
+}
+
+.password-toggle svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.password-toggle .eye-off-icon,
+.password-toggle[aria-pressed="true"] .eye-icon {
+  display: none;
+}
+
+.password-toggle[aria-pressed="true"] .eye-off-icon {
+  display: block;
+}
+
+small {
+  display: block;
+  color: red;
+  font-size: 13px;
+  margin-top: 5px;
+  min-height: 18px;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 20px;
+  background: #f97316;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+button:hover {
+  background: #c2410c;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid #14b8a6;
+  outline-offset: 3px;
+}
+
+p {
+  text-align: center;
+  margin-top: 16px;
+  color: #475569;
+}
+
+p a {
+  color: #0f766e;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+p a:hover {
+  text-decoration: underline;
+}
+
+#successMessage {
+  margin-top: 15px;
+  min-height: 20px;
+  color: green;
+  font-weight: bold;
+}

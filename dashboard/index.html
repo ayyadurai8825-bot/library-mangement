@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | Digital Library</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <img class="brand-icon" src="../assets/logo.png" alt="" aria-hidden="true">
+      <span>Digital Library</span>
+    </div>
+    <button class="menu-toggle" id="menuToggle" type="button" aria-controls="mainNavigation" aria-expanded="false" aria-label="Open navigation menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <nav class="navigation" id="mainNavigation" aria-label="Main navigation">
+      <a href="#overview">Dashboard</a>
+      <a href="../bookpage/index.html">Books</a>
+      <a href="../memberpage/index.html">Members</a>
+      <a href="../issuebook/index.html">Issue Books</a>
+      <a href="../retuenbook/index.html">Return Books</a>
+      <a href="../reports/index.html">Reports</a>
+      <a href="../aboutpage/index.html">About</a>
+      <button class="logout-button" id="logoutButton" type="button">Logout</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="welcome" id="overview">
+      <div>
+        <p class="eyebrow">YOUR LIBRARY OVERVIEW</p>
+        <h1>Welcome back, <span id="welcomeName">Reader</span>!</h1>
+        <p>Manage your collection and keep track of your library in one place.</p>
+      </div>
+    </section>
+
+    <section aria-labelledby="statisticsTitle">
+      <div class="section-heading">
+        <h2 class="section-title" id="statisticsTitle">Library at a glance</h2>
+        <p class="section-description">A live summary of your saved library records.</p>
+      </div>
+      <div class="stats-grid">
+        <article class="stat-card">
+          <span class="stat-icon" aria-hidden="true">📚</span>
+          <div>
+            <p class="stat-label">Book titles</p>
+            <p class="stat-value" id="bookCount">0</p>
+          </div>
+        </article>
+        <article class="stat-card">
+          <span class="stat-icon" aria-hidden="true">📦</span>
+          <div>
+            <p class="stat-label">Total copies</p>
+            <p class="stat-value" id="copyCount">0</p>
+          </div>
+        </article>
+        <article class="stat-card">
+          <span class="stat-icon" aria-hidden="true">👥</span>
+          <div>
+            <p class="stat-label">Total members</p>
+            <p class="stat-value" id="memberCount">0</p>
+          </div>
+        </article>
+        <article class="stat-card">
+          <span class="stat-icon" aria-hidden="true">📤</span>
+          <div>
+            <p class="stat-label">Books currently issued</p>
+            <p class="stat-value" id="issuedCount">0</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="dashboard-section" aria-labelledby="projectDetailsTitle">
+      <div class="section-heading">
+        <h2 class="section-title" id="projectDetailsTitle">Project details</h2>
+        <p class="section-description">A quick overview of this Digital Library project.</p>
+      </div>
+      <div class="cards-grid project-details-grid">
+        <article class="dashboard-card">
+          <span class="card-icon" aria-hidden="true">🎯</span>
+          <h3>Project purpose</h3>
+          <p>
+            Organize a library's books and members, track borrowing and returns,
+            and make collection information easy to review.
+          </p>
+        </article>
+        <article class="dashboard-card">
+          <span class="card-icon" aria-hidden="true">🧰</span>
+          <h3>Main features</h3>
+          <p>
+            Account registration and login, book search and management, member
+            records, separate issue and return workflows, and library reports.
+          </p>
+        </article>
+        <article class="dashboard-card">
+          <span class="card-icon" aria-hidden="true">💻</span>
+          <h3>Technology</h3>
+          <p>
+            Built with HTML, CSS, and JavaScript. Library records are saved in
+            this browser using local storage.
+          </p>
+          <a class="dashboard-link" href="../aboutpage/index.html">More about the project</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="dashboard-section" id="account" aria-labelledby="accountTitle">
+      <div class="section-heading">
+        <h2 class="section-title" id="accountTitle">Quick access</h2>
+        <p class="section-description">Your account and the tools you use most.</p>
+      </div>
+      <div class="cards-grid">
+        <article class="dashboard-card profile-card">
+          <span class="card-icon" aria-hidden="true">👤</span>
+          <h3>Your profile</h3>
+          <p>Signed in to your Digital Library account.</p>
+          <div class="profile-details">
+            <p>Name: <span id="profileName">Reader</span></p>
+            <p>Email: <span id="profileEmail">Not provided</span></p>
+          </div>
+          <button class="delete-account-button" id="deleteAccountButton" type="button">Delete account</button>
+          <p class="account-status" id="accountStatus" role="status" aria-live="polite"></p>
+        </article>
+        <article class="dashboard-card" id="library">
+          <span class="card-icon" aria-hidden="true">📖</span>
+          <h3>Manage books</h3>
+          <p>Add new titles, update book details, or remove records from your collection.</p>
+          <a class="dashboard-link" href="../bookpage/index.html">Open book management</a>
+        </article>
+        <article class="dashboard-card">
+          <span class="card-icon" aria-hidden="true">👥</span>
+          <h3>Manage members</h3>
+          <p>Add, update, or remove member contact records for your library.</p>
+          <a class="dashboard-link" href="../memberpage/index.html">Open member management</a>
+        </article>
+        <article class="dashboard-card">
+          <span class="card-icon" aria-hidden="true">📤</span>
+          <h3>Issue books</h3>
+          <p>Issue available titles to members and set due dates for loans.</p>
+          <a class="dashboard-link" href="../issuebook/index.html">Issue a book</a>
+        </article>
+        <article class="dashboard-card">
+          <span class="card-icon" aria-hidden="true">📥</span>
+          <h3>Return books</h3>
+          <p>Review active loans and return books to update availability and history.</p>
+          <a class="dashboard-link" href="../retuenbook/index.html">Return a book</a>
+        </article>
+        <article class="dashboard-card">
+          <span class="card-icon" aria-hidden="true">📊</span>
+          <h3>Library reports</h3>
+          <p>View current totals for books, members, availability, and borrowing.</p>
+          <a class="dashboard-link" href="../reports/index.html">View reports</a>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <script src="./dashboard.js"></script>
+</body>
+</html>

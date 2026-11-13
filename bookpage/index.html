@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Management | Digital Library</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../dashboard/index.html">
+      <span class="brand-icon" aria-hidden="true">📚</span>
+      <span>Digital Library</span>
+    </a>
+    <nav class="navigation" aria-label="Main navigation">
+      <a href="../dashboard/index.html">Dashboard</a>
+      <a href="#books">Books</a>
+      <a href="../issuebook/index.html">Issue / Return</a>
+      <button class="logout-button" id="logoutButton" type="button">Logout</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-heading">
+      <h1>Book Management</h1>
+      <p>Add, edit, and remove books in the library collection.</p>
+    </section>
+
+    <p class="page-message" id="pageMessage" role="status" aria-live="polite"></p>
+
+    <dialog class="book-dialog" id="bookDialog" aria-labelledby="formTitle">
+      <div class="dialog-heading">
+        <div>
+          <p class="dialog-eyebrow">BOOK COLLECTION</p>
+          <h2 id="formTitle">Add a book</h2>
+        </div>
+        <button class="dialog-close" id="closeDialogButton" type="button" aria-label="Close dialog">×</button>
+      </div>
+      <form id="bookForm">
+        <div class="form-grid">
+          <label>
+            Book ID
+            <input id="bookId" name="bookId" type="text" maxlength="40" required>
+          </label>
+          <label>
+            Title
+            <input id="title" name="title" type="text" maxlength="120" required>
+          </label>
+          <label>
+            Author
+            <input id="author" name="author" type="text" maxlength="100" required>
+          </label>
+          <label>
+            Category
+            <input id="category" name="category" type="text" maxlength="60" required>
+          </label>
+          <label>
+            Quantity
+            <input id="quantity" name="quantity" type="number" min="0" step="1" required>
+          </label>
+        </div>
+        <div class="form-actions">
+          <button class="primary-button" id="saveButton" type="submit">Add Book</button>
+          <button class="secondary-button" id="cancelButton" type="button" hidden>Cancel Edit</button>
+        </div>
+        <p class="form-message" id="formMessage" role="status" aria-live="polite"></p>
+      </form>
+    </dialog>
+
+    <section class="panel books-panel" id="books" aria-labelledby="booksTitle">
+      <div class="list-heading">
+        <div>
+          <h2 id="booksTitle">Book records</h2>
+          <p id="bookCount">0 books</p>
+        </div>
+        <button class="primary-button add-book-button" id="addBookButton" type="button">＋ Add book</button>
+      </div>
+      <div class="search-controls">
+        <label for="bookSearch">Search by title, author, or category</label>
+        <div class="search-input-group">
+          <input
+            id="bookSearch"
+            type="search"
+            placeholder="Start typing a title, author, or category..."
+            autocomplete="off"
+          >
+          <button class="clear-search-button" id="clearSearchButton" type="button" hidden>
+            Clear
+          </button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Book ID</th>
+              <th scope="col">Title</th>
+              <th scope="col">Author</th>
+              <th scope="col">Category</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="bookRows"></tbody>
+        </table>
+        <p class="empty-state" id="emptyState">No books added yet.</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="./books.js"></script>
+</body>
+</html>

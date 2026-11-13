@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Digital Library Login</title>
+
+<link rel="stylesheet" href="./style.css">
+
+</head>
+
+
+<body>
+
+
+<div class="login-container">
+
+
+<h1>📚 Digital Library</h1>
+
+<p>Login to access your account</p>
+
+
+
+<form id="loginForm" novalidate>
+
+
+<label for="email">Email</label>
+
+<input 
+type="email" 
+id="email"
+placeholder="Enter your email"
+autocomplete="username"
+required
+>
+
+
+<span id="emailError" class="error" aria-live="polite"></span>
+
+
+
+<label for="password">Password</label>
+
+<input 
+type="password"
+id="password"
+placeholder="Enter your password"
+autocomplete="current-password"
+required
+>
+
+
+<span id="passwordError" class="error" aria-live="polite"></span>
+
+<span id="loginError" class="login-message" role="status" aria-live="polite"></span>
+
+
+<div class="button-group">
+
+
+<button type="submit">
+Login
+</button>
+
+
+<button type="reset" class="reset-btn">
+Reset
+</button>
+
+
+</div>
+
+
+
+<p class="register-prompt">
+        Don't have an account?
+        <a href="../registerpage/index.html">
+            Register
+        </a>
+    </p>
+</form>
+
+
+</div>
+
+
+
+<script src="./login.js"></script>
+
+
+</body>
+
+</html>

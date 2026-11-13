@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#123c70">
+  <title>Reports | Digital Library</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../dashboard/index.html">
+      <span class="brand-icon" aria-hidden="true">📚</span>
+      <span>Digital Library</span>
+    </a>
+    <nav class="navigation" aria-label="Main navigation">
+      <a href="../dashboard/index.html">Dashboard</a>
+      <a href="../bookpage/index.html">Books</a>
+      <a href="../memberpage/index.html">Members</a>
+      <a href="../issuebook/index.html">Issue / Return</a>
+      <a class="active" href="./index.html" aria-current="page">Reports</a>
+      <button class="logout-button" id="logoutButton" type="button">Logout</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-heading" aria-labelledby="pageTitle">
+      <div>
+        <p class="eyebrow">LIBRARY INSIGHTS</p>
+        <h1 id="pageTitle">Reports dashboard</h1>
+        <p class="heading-copy">A clear view of your collection, circulation, and community.</p>
+      </div>
+      <div class="heading-actions">
+        <label class="search-control">
+          <span class="visually-hidden">Search reports</span>
+          <span class="search-icon" aria-hidden="true">⌕</span>
+          <input class="search-input" id="reportSearch" type="search" placeholder="Search reports..." autocomplete="off">
+        </label>
+        <button class="button button-primary" id="refreshButton" type="button">
+          <span aria-hidden="true">↻</span> Refresh reports
+        </button>
+      </div>
+    </section>
+
+    <p class="report-status" id="reportStatus" role="status" aria-live="polite"></p>
+    <p class="empty-state global-empty" id="noDataMessage" hidden>No Data Available — add books, members, or loans to see your library insights.</p>
+    <p class="empty-state global-empty" id="searchEmpty" hidden>No reports match your search.</p>
+
+    <section class="report-section" aria-labelledby="overviewTitle">
+      <div class="section-heading">
+        <div>
+          <h2 id="overviewTitle">Library overview</h2>
+          <p>Key numbers across your collection and borrowing activity.</p>
+        </div>
+      </div>
+      <div class="stats-grid">
+        <article class="stat-card searchable accent-blue" data-stat="totalBooks">
+          <div class="stat-top"><span class="stat-icon" aria-hidden="true">📚</span><span class="stat-trend">COLLECTION</span></div>
+          <p class="stat-label">Total books</p><p class="stat-value" id="totalBooks">0</p>
+          <p class="stat-detail">Copies in your library</p>
+        </article>
+        <article class="stat-card searchable accent-green" data-stat="totalMembers">
+          <div class="stat-top"><span class="stat-icon" aria-hidden="true">👥</span><span class="stat-trend">COMMUNITY</span></div>
+          <p class="stat-label">Total members</p><p class="stat-value" id="totalMembers">0</p>
+          <p class="stat-detail">Registered library members</p>
+        </article>
+        <article class="stat-card searchable accent-violet" data-stat="issuedBooks">
+          <div class="stat-top"><span class="stat-icon" aria-hidden="true">📤</span><span class="stat-trend">ON LOAN</span></div>
+          <p class="stat-label">Issued books</p><p class="stat-value" id="issuedBooks">0</p>
+          <p class="stat-detail">Currently with members</p>
+        </article>
+        <article class="stat-card searchable accent-teal" data-stat="returnedBooks">
+          <div class="stat-top"><span class="stat-icon" aria-hidden="true">📥</span><span class="stat-trend">COMPLETED</span></div>
+          <p class="stat-label">Returned books</p><p class="stat-value" id="returnedBooks">0</p>
+          <p class="stat-detail">Loans returned to date</p>
+        </article>
+        <article class="stat-card searchable accent-cyan" data-stat="availableBooks">
+          <div class="stat-top"><span class="stat-icon" aria-hidden="true">✅</span><span class="stat-trend">ON SHELF</span></div>
+          <p class="stat-label">Available books</p><p class="stat-value" id="availableBooks">0</p>
+          <p class="stat-detail">Ready to be borrowed</p>
+        </article>
+        <article class="stat-card searchable accent-amber" data-stat="overdueBooks">
+          <div class="stat-top"><span class="stat-icon" aria-hidden="true">⏰</span><span class="stat-trend">NEEDS ATTENTION</span></div>
+          <p class="stat-label">Overdue books</p><p class="stat-value" id="overdueBooks">0</p>
+          <p class="stat-detail">Active loans past their due date</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="report-section" aria-labelledby="trendsTitle">
+      <div class="section-heading">
+        <div>
+          <h2 id="trendsTitle">Activity trends</h2>
+          <p>Monthly activity over the last six months.</p>
+        </div>
+        <span class="section-note"><span class="legend-dot"></span> Records</span>
+      </div>
+      <div class="charts-grid">
+        <article class="panel searchable">
+          <div class="panel-heading"><div><h3>Monthly book issues</h3><p>Loans started each month</p></div><span class="panel-icon blue-icon" aria-hidden="true">↗</span></div>
+          <div class="chart" id="issuesChart" aria-label="Monthly book issues chart"></div>
+          <p class="chart-empty empty-state" hidden>No Data Available</p>
+        </article>
+        <article class="panel searchable">
+          <div class="panel-heading"><div><h3>Monthly book returns</h3><p>Books returned each month</p></div><span class="panel-icon green-icon" aria-hidden="true">↙</span></div>
+          <div class="chart" id="returnsChart" aria-label="Monthly book returns chart"></div>
+          <p class="chart-empty empty-state" hidden>No Data Available</p>
+        </article>
+        <article class="panel searchable">
+          <div class="panel-heading"><div><h3>New members per month</h3><p>Registrations by month</p></div><span class="panel-icon teal-icon" aria-hidden="true">＋</span></div>
+          <div class="chart" id="membersChart" aria-label="New members per month chart"></div>
+          <p class="chart-empty empty-state" hidden>No registration dates saved</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="report-section split-grid">
+      <article class="panel searchable" aria-labelledby="categoryTitle">
+        <div class="section-heading compact-heading">
+          <div><h2 id="categoryTitle">Book category report</h2><p>Collection size by subject.</p></div>
+        </div>
+        <div class="category-list" id="categoryList"></div>
+        <p class="empty-state" id="categoryEmpty" hidden>No Data Available</p>
+      </article>
+      <article class="panel searchable" aria-labelledby="popularTitle">
+        <div class="section-heading compact-heading">
+          <div><h2 id="popularTitle">Most borrowed books</h2><p>Your top five by loan count.</p></div>
+        </div>
+        <ol class="popular-list" id="popularList"></ol>
+        <p class="empty-state" id="popularEmpty" hidden>No Data Available</p>
+      </article>
+    </section>
+
+    <section class="report-section panel searchable" aria-labelledby="transactionsTitle">
+      <div class="section-heading table-heading">
+        <div><h2 id="transactionsTitle">Recent transactions</h2><p>Books issued or returned in the last 10 minutes. This list refreshes automatically.</p></div>
+        <span class="record-count" id="transactionCount">0 records</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th scope="col">Book ID</th><th scope="col">Book name</th><th scope="col">Member name</th>
+            <th scope="col">Issue date</th><th scope="col">Return date</th><th scope="col">Status</th>
+          </tr></thead>
+          <tbody id="transactionRows"></tbody>
+        </table>
+      </div>
+      <p class="empty-state" id="transactionEmpty" hidden>No Data Available</p>
+    </section>
+
+    <dialog class="transaction-dialog" id="transactionDialog" aria-labelledby="transactionDialogTitle">
+      <div class="dialog-heading">
+        <div>
+          <p class="dialog-eyebrow">BORROWING RECORD</p>
+          <h2 id="transactionDialogTitle">Transaction details</h2>
+        </div>
+        <button class="dialog-close" id="closeTransactionDialog" type="button" aria-label="Close transaction details">×</button>
+      </div>
+      <dl class="transaction-details">
+        <div><dt>Book ID</dt><dd id="detailBookId">—</dd></div>
+        <div><dt>Book name</dt><dd id="detailBookName">—</dd></div>
+        <div><dt>Member name</dt><dd id="detailMemberName">—</dd></div>
+        <div><dt>Added at</dt><dd id="detailCreatedAt">—</dd></div>
+        <div><dt>Issue date</dt><dd id="detailIssueDate">—</dd></div>
+        <div><dt>Due date</dt><dd id="detailDueDate">—</dd></div>
+        <div><dt>Return date</dt><dd id="detailReturnDate">—</dd></div>
+        <div><dt>Status</dt><dd id="detailStatus">—</dd></div>
+      </dl>
+    </dialog>
+
+    <section class="report-section split-grid">
+      <article class="panel searchable" aria-labelledby="activityTitle">
+        <div class="section-heading compact-heading">
+          <div><h2 id="activityTitle">Recent activities</h2><p>Books, members, and loans added or updated in the last 10 minutes.</p></div>
+        </div>
+        <ol class="activity-list" id="activityList"></ol>
+        <p class="empty-state" id="activityEmpty" hidden>No Data Available</p>
+      </article>
+      <article class="panel searchable" aria-labelledby="summaryTitle">
+        <div class="section-heading compact-heading">
+          <div><h2 id="summaryTitle">Quick report summary</h2><p>A snapshot of today and your collection.</p></div>
+        </div>
+        <div class="summary-list">
+          <div><span><span class="summary-icon" aria-hidden="true">📤</span>Today's issues</span><strong id="todayIssues">0</strong></div>
+          <div><span><span class="summary-icon" aria-hidden="true">📥</span>Today's returns</span><strong id="todayReturns">0</strong></div>
+          <div><span><span class="summary-icon" aria-hidden="true">🟢</span>Active members</span><strong id="activeMembers">0</strong></div>
+          <div><span><span class="summary-icon" aria-hidden="true">✍️</span>Total authors</span><strong id="totalAuthors">0</strong></div>
+          <div><span><span class="summary-icon" aria-hidden="true">🗂️</span>Total categories</span><strong id="totalCategories">0</strong></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="report-section export-panel searchable" aria-label="Report actions">
+      <div><h2>Need a copy?</h2><p>Print or export the latest report data.</p></div>
+      <div class="export-actions">
+        <button class="button button-secondary" id="printButton" type="button"><span aria-hidden="true">🖨️</span> Print report</button>
+        <button class="button button-secondary" id="csvButton" type="button"><span aria-hidden="true">📊</span> Export CSV</button>
+        <button class="button button-primary" id="pdfButton" type="button"><span aria-hidden="true">⬇</span> Download PDF</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p id="updatedAt">Last updated: —</p>
+    <p>© <span id="currentYear"></span> Digital Library Management System</p>
+  </footer>
+  <script src="./reports.js"></script>
+</body>
+</html>
