@@ -84,6 +84,11 @@
           <p class="stat-label">Overdue books</p><p class="stat-value" id="overdueBooks">0</p>
           <p class="stat-detail">Active loans past their due date</p>
         </article>
+        <article class="stat-card searchable accent-amber" data-stat="totalFineCollected">
+          <div class="stat-top"><span class="stat-icon" aria-hidden="true">₹</span><span class="stat-trend">FINE COLLECTION</span></div>
+          <p class="stat-label">Total fine collected</p><p class="stat-value" id="totalFineCollected">₹0</p>
+          <p class="stat-detail">₹5 for every overdue day</p>
+        </article>
       </div>
     </section>
 
@@ -140,7 +145,7 @@
         <table>
           <thead><tr>
             <th scope="col">Book ID</th><th scope="col">Book name</th><th scope="col">Member name</th>
-            <th scope="col">Issue date</th><th scope="col">Return date</th><th scope="col">Status</th>
+            <th scope="col">Due date</th><th scope="col">Return date</th><th scope="col">Overdue days</th><th scope="col">Fine</th><th scope="col">Status</th>
           </tr></thead>
           <tbody id="transactionRows"></tbody>
         </table>
@@ -164,6 +169,8 @@
         <div><dt>Issue date</dt><dd id="detailIssueDate">—</dd></div>
         <div><dt>Due date</dt><dd id="detailDueDate">—</dd></div>
         <div><dt>Return date</dt><dd id="detailReturnDate">—</dd></div>
+        <div><dt>Overdue days</dt><dd id="detailOverdueDays">—</dd></div>
+        <div><dt>Fine amount</dt><dd id="detailFineAmount">—</dd></div>
         <div><dt>Status</dt><dd id="detailStatus">—</dd></div>
       </dl>
     </dialog>

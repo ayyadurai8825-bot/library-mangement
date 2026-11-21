@@ -5,7 +5,8 @@ const reportFields = {
   issuedBooks: document.getElementById("issuedBooks"),
   returnedBooks: document.getElementById("returnedBooks"),
   availableBooks: document.getElementById("availableBooks"),
-  overdueBooks: document.getElementById("overdueBooks")
+  overdueBooks: document.getElementById("overdueBooks"),
+  totalFineCollected: document.getElementById("totalFineCollected")
 };
 
 const reportStatus = document.getElementById("reportStatus");
@@ -47,6 +48,46 @@ function dateLabel(value) {
   return date
     ? date.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" })
     : "—";
+}
+
+// Calculate fine as ₹5 for each day after the due date.
+function calculateFine(issue) {
+  if (!issue.dueDate) {
+    return { overdueDays: 0, fineAmount: 0 };
+  }
+
+  const due = parseDate(issue.dueDate);
+  const endValue = issue.status === "returned" && issue.returnDate
+    ? issue.returnDate
+    : getToday();
+  const end = parseDate(endValue);
+
+  if (!due || !end || end <= due) {
+    return { overdueDays: 0, fineAmount: 0 };
+  }
+
+  // Use date-only UTC values so time and daylight-saving changes do not affect overdue days.
+  const dueTime = Date.UTC(due.getFullYear(), due.getMonth(), due.getDate());
+  const endTime = Date.UTC(end.getFullYear(), end.getMonth(), end.getDate());
+  const overdueDays = Math.floor((endTime - dueTime) / 86400000);
+
+  return {
+    overdueDays: overdueDays,
+    fineAmount: overdueDays * 5
+  };
+}
+
+// Returned records use the saved fine details; older records are calculated on the report.
+function getFineDetails(issue) {
+  if (issue.status === "returned" &&
+      Number.isInteger(issue.overdueDays) &&
+      Number.isInteger(issue.fineAmount)) {
+    return {
+      overdueDays: issue.overdueDays,
+      fineAmount: issue.fineAmount
+    };
+  }
+  return calculateFine(issue);
 }
 
 function readArray(key, validate, label) {
@@ -392,6 +433,8 @@ function showTransactionDetails(issue, opener) {
     detailIssueDate: dateLabel(issue.issueDate),
     detailDueDate: dateLabel(issue.dueDate),
     detailReturnDate: dateLabel(issue.returnDate),
+    detailOverdueDays: issue.status === "returned" ? String(getFineDetails(issue).overdueDays) : "0",
+    detailFineAmount: issue.status === "returned" ? `₹${getFineDetails(issue).fineAmount}` : "₹0",
     detailStatus: transactionStatus(issue)
   };
 
@@ -444,8 +487,10 @@ function renderTransactions(issues) {
       issue.bookId,
       bookName,
       memberName,
-      dateLabel(issue.issueDate),
-      dateLabel(issue.returnDate)
+      dateLabel(issue.dueDate),
+      dateLabel(issue.returnDate),
+      String(issue.status === "returned" ? getFineDetails(issue).overdueDays : 0),
+      `₹${issue.status === "returned" ? getFineDetails(issue).fineAmount : 0}`
     ].forEach(function (value) {
       const cell = document.createElement("td");
       cell.textContent = value;
@@ -544,16 +589,19 @@ function csvCell(value) {
 }
 
 function exportCsv() {
-  const headers = ["Book ID", "Book Name", "Member Name", "Added At", "Issue Date", "Return Date", "Status"];
+  const headers = ["Book ID", "Book Name", "Member Name", "Added At", "Due Date", "Return Date", "Overdue Days", "Fine Amount", "Status"];
   const rows = getRecentIssues(currentIssues).map(function (issue) {
     const createdAt = getIssueRecentAt(issue);
+    const fine = getFineDetails(issue);
     return [
       issue.bookId,
       issue.bookTitle || booksForTransaction(issue).title,
       issue.memberName,
       createdAt ? createdAt.toISOString() : "",
-      issue.issueDate,
+      issue.dueDate || "",
       issue.returnDate || "",
+      String(issue.status === "returned" ? fine.overdueDays : 0),
+      String(issue.status === "returned" ? fine.fineAmount : 0),
       transactionStatus(issue)
     ];
   });
@@ -632,6 +680,9 @@ function updateReports() {
     const availableCount = books.reduce(function (total, book) {
       return total + book.quantity;
     }, 0);
+    const totalFineCollected = returned.reduce(function (total, issue) {
+      return total + getFineDetails(issue).fineAmount;
+    }, 0);
 
     reportFields.totalBooks.textContent = String(availableCount + issued.length);
     reportFields.totalMembers.textContent = String(members.length);
@@ -639,6 +690,7 @@ function updateReports() {
     reportFields.returnedBooks.textContent = String(returned.length);
     reportFields.availableBooks.textContent = String(availableCount);
     reportFields.overdueBooks.textContent = String(overdue.length);
+    reportFields.totalFineCollected.textContent = `₹${totalFineCollected}`;
 
     renderChart("issuesChart", issues, "issueDate", "#0f766e", "No Data Available");
     renderChart("returnsChart", returned, "returnDate", "#16966a", "No Data Available");

@@ -13,6 +13,23 @@ function localDateString(date) {
   return `${year}-${month}-${day}`;
 }
 
+// Calculate overdue days using midnight dates so DST does not affect the result.
+function calculateFine(dueDate, returnDate) {
+  const due = new Date(`${dueDate}T00:00:00Z`);
+  const returned = new Date(`${returnDate}T00:00:00Z`);
+
+  if (Number.isNaN(due.getTime()) || Number.isNaN(returned.getTime()) || returned <= due) {
+    return { overdueDays: 0, fineAmount: 0 };
+  }
+
+  const millisecondsPerDay = 24 * 60 * 60 * 1000;
+  const overdueDays = Math.floor((returned - due) / millisecondsPerDay);
+  return {
+    overdueDays: overdueDays,
+    fineAmount: overdueDays * 5
+  };
+}
+
 function showMessage(message, isSuccess) {
   pageMessage.textContent = message;
   pageMessage.classList.toggle("success", isSuccess);
@@ -101,6 +118,14 @@ function renderActiveLoans() {
     fields.forEach(function (value) {
       const cell = document.createElement("td");
       cell.textContent = value;
+      row.appendChild(cell);
+    });
+
+    // Show the fine preview for an active loan as of today.
+    const finePreview = calculateFine(issue.dueDate, today);
+    [finePreview.overdueDays, `₹${finePreview.fineAmount}`, "—"].forEach(function (value) {
+      const cell = document.createElement("td");
+      cell.textContent = String(value);
       row.appendChild(cell);
     });
 
@@ -193,18 +218,24 @@ function returnBook(issueId) {
   });
 
   const today = localDateString(new Date());
+  const fineDetails = calculateFine(issue.dueDate, today);
   const updatedIssues = issues.map(function (item) {
     return item.issueId === issueId
       ? Object.assign({}, item, {
         status: "returned",
         returnDate: today,
-        returnedAt: new Date().toISOString()
+        returnedAt: new Date().toISOString(),
+        overdueDays: fineDetails.overdueDays,
+        fineAmount: fineDetails.fineAmount
       })
       : item;
   });
 
   if (persistReturn(updatedBooks, updatedIssues)) {
-    showMessage(`"${issue.bookTitle}" was returned successfully.`, true);
+    showMessage(
+      `"${issue.bookTitle}" returned successfully. Due: ${issue.dueDate}, Return: ${today}, Overdue days: ${fineDetails.overdueDays}, Fine: ₹${fineDetails.fineAmount}.`,
+      true
+    );
   }
 }
 
